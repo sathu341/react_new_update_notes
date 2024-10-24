@@ -1,0 +1,153 @@
+Here are 5 exercises to help you practice **React props**:
+
+---
+
+### **Exercise 1: Greeting Component**
+Create a component called `Greeting` that takes a `name` prop and displays a personalized message.
+
+#### **Instructions:**
+- Pass different names to the `Greeting` component and display them on the page.
+
+#### **Expected Output:**
+```javascript
+function Greeting(props) {
+  return <h1>Hello, {props.name}!</h1>;
+}
+
+function App() {
+  return (
+    <div>
+      <Greeting name="Alice" />
+      <Greeting name="Bob" />
+    </div>
+  );
+}
+```
+
+---
+
+### **Exercise 2: Product Component**
+Create a `Product` component that takes props like `name`, `price`, and `description`, and displays a product card.
+
+#### **Instructions:**
+- Render two or three product components with different details.
+
+#### **Expected Output:**
+```javascript
+function Product(props) {
+  return (
+    <div>
+      <h2>{props.name}</h2>
+      <p>Price: ${props.price}</p>
+      <p>{props.description}</p>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <div>
+      <Product name="Laptop" price={999} description="High-performance laptop" />
+      <Product name="Phone" price={599} description="Latest smartphone" />
+    </div>
+  );
+}
+```
+
+---
+
+### **Exercise 3: User Profile Component**
+Create a `UserProfile` component that accepts props such as `name`, `age`, and `email`, and displays the user’s profile information.
+
+#### **Instructions:**
+- Render the `UserProfile` component for at least two users.
+
+#### **Expected Output:**
+```javascript
+function UserProfile(props) {
+  return (
+    <div>
+      <h2>{props.name}</h2>
+      <p>Age: {props.age}</p>
+      <p>Email: {props.email}</p>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <div>
+      <UserProfile name="John Doe" age={30} email="john@example.com" />
+      <UserProfile name="Jane Smith" age={28} email="jane@example.com" />
+    </div>
+  );
+}
+```
+
+---
+
+### **Exercise 4: Todo Item Component**
+Create a `TodoItem` component that accepts `task`, `status`, and `deadline` as props and displays each todo item in a list.
+
+#### **Instructions:**
+- Render at least three todo items with different values for each prop.
+
+#### **Expected Output:**
+```javascript
+function TodoItem(props) {
+  return (
+    <div>
+      <h3>{props.task}</h3>
+      <p>Status: {props.status}</p>
+      <p>Deadline: {props.deadline}</p>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <div>
+      <TodoItem task="Finish React project" status="In progress" deadline="Tomorrow" />
+      <TodoItem task="Buy groceries" status="Completed" deadline="Today" />
+      <TodoItem task="Clean the house" status="Pending" deadline="Next week" />
+    </div>
+  );
+}
+```
+
+---
+
+### **Exercise 5: Person Component with Nested Props**
+Create a `Person` component that takes `name`, `age`, and `address` as props. The `address` prop should be an object with `city` and `country` properties. Display the person’s name, age, and full address.
+
+#### **Instructions:**
+- Pass an object for the `address` prop and render multiple `Person` components with different addresses.
+
+#### **Expected Output:**
+```javascript
+function Person(props) {
+  return (
+    <div>
+      <h2>{props.name}</h2>
+      <p>Age: {props.age}</p>
+      <p>Address: {props.address.city}, {props.address.country}</p>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <div>
+      <Person name="Alice" age={25} address={{ city: "New York", country: "USA" }} />
+      <Person name="Bob" age={30} address={{ city: "Paris", country: "France" }} />
+    </div>
+  );
+}
+```
+
+---
+
+### **Bonus Challenge:**
+Modify one of the components (e.g., `TodoItem` or `UserProfile`) to include a **button** that triggers an action when clicked, such as marking a task as complete or showing an alert with the user’s name.
+
+This will give you a deeper understanding of how props are passed and how you can trigger events in functional components.
