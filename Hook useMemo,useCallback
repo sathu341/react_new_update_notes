@@ -1,0 +1,117 @@
+1. useMemo Hook
+The useMemo hook is used for memoization, which helps optimize performance by caching the result of a computation. 
+It recalculates the result only when its dependencies change.
+
+Syntax:
+
+const memoizedValue = useMemo(() => computeExpensiveValue(a, b), [a, b]);
+Callback function: The function containing the expensive computation.
+Dependencies array: The list of variables that, when changed, will trigger recalculation.
+Example:
+
+import React, { useMemo, useState } from 'react';
+
+function ExpensiveComponent({ count }) {
+  const expensiveCalculation = (num) => {
+    console.log('Calculating...');
+    return num * 2;
+  };
+
+  const memoizedValue = useMemo(() => expensiveCalculation(count), [count]);
+
+  return <div>Calculated Value: {memoizedValue}</div>;
+}
+In this example:
+
+The useMemo hook only recalculates expensiveCalculation when count changes, improving performance for expensive computations.
+
+2. useCallback Hook
+The useCallback hook is used to memoize a callback function, which ensures that the function reference doesn't change between 
+renders unless its dependencies change. This is useful for passing stable functions as props to child components, avoiding
+unnecessary re-renders.
+
+Syntax:
+
+const memoizedCallback = useCallback(() => {
+  doSomething(a, b);
+}, [a, b]);
+Callback function: The function to be memoized.
+Dependencies array: The list of variables that, when changed, will update the function.
+Example:
+
+import React, { useState, useCallback } from 'react';
+
+function ParentComponent() {
+  const [count, setCount] = useState(0);
+
+  const increment = useCallback(() => {
+    setCount((prevCount) => prevCount + 1);
+  }, []);
+
+  return (
+    <div>
+      <ChildComponent increment={increment} />
+      <p>Count: {count}</p>
+    </div>
+  );
+}
+
+function ChildComponent({ increment }) {
+  return <button onClick={increment}>Increment</button>;
+}
+In this example:
+
+The increment function is memoized using useCallback, so it doesn't get recreated on every render unless its dependencies change.
+
+3. useReducer Hook
+The useReducer hook is a more advanced state management tool than useState. It is typically used when you have complex state logic 
+that involves multiple sub-values or when the next state depends on the previous state.
+
+Syntax:
+
+const [state, dispatch] = useReducer(reducer, initialState);
+reducer: A function that receives the current state and an action, and returns the new state.
+initialState: The initial value of the state.
+dispatch: A function to send actions to the reducer.
+Example:
+
+import React, { useReducer } from 'react';
+
+const initialState = { count: 0 };
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'increment':
+      return { count: state.count + 1 };
+    case 'decrement':
+      return { count: state.count - 1 };
+    default:
+      return state;
+  }
+}
+
+function Counter() {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  return (
+    <div>
+      <p>Count: {state.count}</p>
+      <button onClick={() => dispatch({ type: 'increment' })}>Increment</button>
+      <button onClick={() => dispatch({ type: 'decrement' })}>Decrement</button>
+    </div>
+  );
+}
+In this example:
+
+useReducer manages the counter state by dispatching actions to a reducer function that handles the state changes based on the 
+action type.
+
+Key Differences:
+
+useMemo: Memoizes the result of a function to optimize performance.
+
+useCallback: Memoizes a function itself to prevent unnecessary re-creations.
+
+useReducer: An alternative to useState for managing complex state logic.
+
+These hooks are especially useful when dealing with performance optimization and more complex state management in React applications.
