@@ -1,0 +1,110 @@
+1. useState Hook
+The useState hook allows you to add state to a functional component. It returns an array with two elements:
+
+The current state value.
+A function to update the state.
+
+const [state, setState] = useState(initialState); 
+
+initialState: The initial value of the state.
+state: The current state value.
+setState: The function to update the state.
+
+import React, { useState } from 'react';
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <p>You clicked {count} times</p>
+      <button onClick={() => setCount(count + 1)}>Click me</button>
+    </div>
+  );
+}
+
+In this example:
+
+count holds the current state value.
+setCount is the function to update the state when the button is clicked.
+
+2. useEffect Hook
+The useEffect hook lets you perform side effects in functional components. Side effects can include fetching data, updating the DOM, or setting up subscriptions. It runs after the render is committed to the screen.
+
+Syntax:
+
+useEffect(() => {
+  // Effect logic here
+
+  return () => {
+    // Cleanup logic (optional)
+  };
+}, [dependencies]);
+
+Effect function: Runs after the component renders.
+
+Cleanup function (optional): Runs when the component unmounts or before re-running the effect.
+Dependencies array: If provided, the effect only re-runs when one of the dependencies changes.
+Example:
+
+import React, { useState, useEffect } from 'react';
+
+function DataFetcher() {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    fetch('https://api.example.com/data')
+      .then(response => response.json())
+      .then(result => setData(result));
+  }, []); // Empty array means this effect runs once after the initial render
+
+  return (
+    <div>
+      <p>Fetched Data: {data ? JSON.stringify(data) : 'Loading...'}</p>
+    </div>
+  );
+}
+
+In this example:
+
+The useEffect hook fetches data from an API after the initial render.
+The empty dependency array ([]) ensures the effect only runs once.
+
+3. useRef Hook
+The useRef hook allows you to persist values across renders without causing a re-render when they change. It's commonly used to access DOM elements directly.
+
+Syntax:
+
+const refContainer = useRef(initialValue);
+
+initialValue: The initial value of the ref (often null).
+refContainer.current: The current value of the reference, which persists across renders.
+Example:
+
+import React, { useRef } from 'react';
+
+function InputFocus() {
+  const inputRef = useRef(null);
+
+  const focusInput = () => {
+    inputRef.current.focus(); // Directly accesses the DOM element
+  };
+
+  return (
+    <div>
+      <input ref={inputRef} type="text" />
+      <button onClick={focusInput}>Focus the input</button>
+    </div>
+  );
+}
+In this example:
+
+inputRef is used to reference the input element.
+The focusInput function is called when the button is clicked, and it sets focus on the input element using inputRef.current.
+
+Key Differences:
+useState manages stateful logic.
+useEffect handles side effects and lifecycle events.
+useRef stores references to DOM elements or any mutable value across renders.
+
+These hooks are fundamental to managing state, lifecycle events, and references in functional components in React.
