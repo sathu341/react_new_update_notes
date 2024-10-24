@@ -1,0 +1,138 @@
+### **React Components and Props**
+
+React components are the building blocks of a React application, and **props** (short for properties) allow components to be dynamic by passing data between them.
+
+---
+
+### 1. **React Components**
+In React, components are reusable pieces of code that represent parts of the user interface (UI). They can be either **functional** or **class-based**. A component can accept inputs (props) and return a React element to define what should appear on the screen.
+
+#### Functional Components:
+Functional components are JavaScript functions that return JSX (React’s syntax to define UI elements).
+
+#### Example of a Functional Component:
+```javascript
+import React from 'react';
+
+function Welcome() {
+  return <h1>Hello, World!</h1>;
+}
+
+export default Welcome;
+```
+
+In this example, `Welcome` is a functional component that returns a simple greeting.
+
+#### Class Components:
+Before hooks were introduced, class components were used for handling state and lifecycle methods. They extend from `React.Component`.
+
+#### Example of a Class Component:
+```javascript
+import React, { Component } from 'react';
+
+class Welcome extends Component {
+  render() {
+    return <h1>Hello, World!</h1>;
+  }
+}
+
+export default Welcome;
+```
+
+Both functional and class components serve the same purpose, but functional components are more common today due to the introduction of hooks.
+
+---
+
+### 2. **Props (Properties)**
+**Props** are the mechanism by which data is passed from one component to another. Props allow components to be dynamic and reusable because the behavior of a component can change depending on the props it receives.
+
+#### Passing Props:
+Props are passed to components in a similar way to how HTML attributes are added to an element.
+
+#### Example of Passing Props:
+```javascript
+import React from 'react';
+
+function Greeting(props) {
+  return <h1>Hello, {props.name}!</h1>;
+}
+
+function App() {
+  return (
+    <div>
+      <Greeting name="Alice" />
+      <Greeting name="Bob" />
+    </div>
+  );
+}
+
+export default App;
+```
+
+In this example:
+- The `Greeting` component accepts a `name` prop and displays a personalized message.
+- In the `App` component, we pass the `name` prop with different values (`"Alice"` and `"Bob"`) to the `Greeting` component, making it reusable with different data.
+
+#### Props in Class Components:
+For class components, props are accessed using `this.props`.
+
+```javascript
+import React, { Component } from 'react';
+
+class Greeting extends Component {
+  render() {
+    return <h1>Hello, {this.props.name}!</h1>;
+  }
+}
+
+export default Greeting;
+```
+
+---
+
+### Key Points about Props:
+- **Immutable**: Props are read-only and cannot be changed by the receiving component.
+- **Passed from parent to child**: Props are passed down from parent components to child components, allowing data to flow through the component hierarchy.
+- **Dynamic UI**: Props enable dynamic and flexible components that can render different content based on the data passed.
+
+---
+
+### Example Combining Components and Props:
+
+```javascript
+import React from 'react';
+
+// Functional component to display a person's information
+function PersonInfo(props) {
+  return (
+    <div>
+      <h2>Name: {props.name}</h2>
+      <p>Age: {props.age}</p>
+    </div>
+  );
+}
+
+// Parent component that passes props to PersonInfo
+function App() {
+  return (
+    <div>
+      <PersonInfo name="John Doe" age={30} />
+      <PersonInfo name="Jane Smith" age={25} />
+    </div>
+  );
+}
+
+export default App;
+```
+
+In this example:
+- `PersonInfo` is a reusable component that displays a person's name and age.
+- The `App` component passes different values for the `name` and `age` props to render multiple persons' information.
+
+---
+
+### Conclusion:
+- **Components**: Reusable pieces of code that define parts of the UI.
+- **Props**: Mechanism for passing data from parent to child components, enabling reusability and dynamic content.
+
+These concepts form the core of React's component-based architecture, allowing for scalable and maintainable UI development.
