@@ -1,4 +1,4 @@
-What useMemo Does
+************************************************************** 📕 What useMemo Does  *************************************************************************
 
 useMemo lets you memoize (remember) a computed value so that it doesn't get recalculated on every render, unless its dependencies change.
 This is useful when:
@@ -93,7 +93,7 @@ Optimizing performance in dashboards or tables where state changes often but the
 
 ✅ Rule of Thumb: Use useMemo only when performance issues occur due to unnecessary recalculations. Overusing it for everything can make code harder to maintain.
 
-What useCallback Does
+*******************************************************************************🎈 What useCallback Does ************************************************************
 
 useCallback returns a memoized function that only changes when its dependencies change.
 It’s used to prevent re-creation of functions on every render, which is helpful when:
@@ -191,6 +191,94 @@ React.memo with functions as props — prevents child components from thinking p
 useMemo memoizes a value (result of a calculation).
 
 useCallback memoizes a function (so its reference stays the same).
+*****************************************************************useMemo+useCallback***********************************************************************
+import React, { useState, useMemo, useCallback } from "react";
+
+// Child table component
+const DataTable = React.memo(function DataTable({ data, onSort }) {
+  console.log("Rendering DataTable...");
+  return (
+    <table border="1" cellPadding="5" style={{ width: "100%" }}>
+      <thead>
+        <tr>
+          <th onClick={() => onSort("id")}>ID ▲▼</th>
+          <th onClick={() => onSort("name")}>Name ▲▼</th>
+        </tr>
+      </thead>
+      <tbody>
+        {data.map((row) => (
+          <tr key={row.id}>
+            <td>{row.id}</td>
+            <td>{row.name}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+});
+
+export default function App() {
+  const [search, setSearch] = useState("");
+  const [sortField, setSortField] = useState(null);
+  const [sortAsc, setSortAsc] = useState(true);
+
+  // Simulate large dataset
+  const products = useMemo(
+    () =>
+      new Array(5000).fill(0).map((_, i) => ({
+        id: i + 1,
+        name: `Product ${Math.floor(Math.random() * 1000)}`
+      })),
+    []
+  );
+
+  // Filtering (memoized so it only recalculates when search changes)
+  const filteredProducts = useMemo(() => {
+    console.log("Filtering data...");
+    return products.filter((p) =>
+      p.name.toLowerCase().includes(search.toLowerCase())
+    );
+  }, [products, search]);
+
+  // Sorting (memoized so it only recalculates when filteredProducts, sortField, or sortAsc changes)
+  const sortedProducts = useMemo(() => {
+    console.log("Sorting data...");
+    if (!sortField) return filteredProducts;
+    return [...filteredProducts].sort((a, b) => {
+      if (a[sortField] < b[sortField]) return sortAsc ? -1 : 1;
+      if (a[sortField] > b[sortField]) return sortAsc ? 1 : -1;
+      return 0;
+    });
+  }, [filteredProducts, sortField, sortAsc]);
+
+  // Memoized sort function to prevent DataTable from re-rendering unnecessarily
+  const handleSort = useCallback(
+    (field) => {
+      if (sortField === field) {
+        setSortAsc(!sortAsc); // toggle direction
+      } else {
+        setSortField(field);
+        setSortAsc(true);
+      }
+    },
+    [sortField, sortAsc]
+  );
+
+  return (
+    <div style={{ padding: "20px" }}>
+      <h2>Product Table</h2>
+      <input
+        type="text"
+        placeholder="Search products..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        style={{ marginBottom: "10px", padding: "5px" }}
+      />
+      <DataTable data={sortedProducts.slice(0, 20)} onSort={handleSort} />
+    </div>
+  );
+}
+___________________________________________________________🎪 useReducer 🎪__________________________________________________________________________________________
 
 3. useReducer Hook
 The useReducer hook is a more advanced state management tool than useState. It is typically used when you have complex state logic 
