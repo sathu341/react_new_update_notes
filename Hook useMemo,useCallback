@@ -44,7 +44,8 @@ With useMemo, it only recalculates when count changes.
 
 Real-World Practical Example — Filtering Large Data
 
-Imagine you have 10,000 products and a search filter. You don’t want to filter the list again every time some unrelated state changes (like a theme toggle).
+Imagine you have 10,000 products and a search filter. You don’t want to filter the list again every time some unrelated state 
+changes (like a theme toggle).
 
 import React, { useState, useMemo } from "react";
 
@@ -89,9 +90,11 @@ Large datasets (products, customers, orders, etc.).
 
 Complex calculations (e.g., data analytics, sorting, filtering).
 
-Optimizing performance in dashboards or tables where state changes often but the expensive work should only happen when relevant inputs change.
+Optimizing performance in dashboards or tables where state changes often but the expensive work should only happen when relevant
+inputs change.
 
-✅ Rule of Thumb: Use useMemo only when performance issues occur due to unnecessary recalculations. Overusing it for everything can make code harder to maintain.
+✅ Rule of Thumb: Use useMemo only when performance issues occur due to unnecessary recalculations. Overusing it for everything can
+make code harder to maintain.
 
 *******************************************************************************🎈 What useCallback Does ************************************************************
 
