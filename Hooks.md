@@ -76,6 +76,7 @@ Passing functions as props to child components (avoiding unnecessary re-renders)
 Avoiding function identity change when dependencies didn’t change.
 </p>
 <h3>Basic Example</h3>
+  <pre><code class="language-js">
 import React, { useState, useCallback } from "react";
 
 function Button({ onClick, children }) {
@@ -101,6 +102,8 @@ export default function UseCallbackExample() {
   );
 }
 
+</code>
+</pre>
 <h3>
   Why useCallback Helps Here
 </h3>
@@ -118,7 +121,7 @@ Real-World Practical Example — Search with Debounce
 Imagine a search box where the search function is passed down to a child component that handles API calls with debounce.
 We don’t want the debounce to reset on every render just because the parent re-rendered.
 </p>
-
+  <pre><code class="language-js">
 
 import React, { useState, useCallback } from "react";
 
@@ -154,9 +157,10 @@ export default function SearchPage() {
     </div>
   );
 }
-
-Where useCallback Helps in the Real World
-
+</code>
+</pre>
+<h3>Where useCallback Helps in the Real World</h3>
+<p>
 Form inputs where change handlers are passed to deeply nested components.
 
 Buttons and menus in large UIs to avoid re-rendering child components unnecessarily.
@@ -164,12 +168,13 @@ Buttons and menus in large UIs to avoid re-rendering child components unnecessar
 Debounced or throttled API calls to avoid function recreation resetting timers.
 
 React.memo with functions as props — prevents child components from thinking props have changed.
-
-💡 Difference from useMemo:
-
+</p>
+<h3>💡 Difference from useMemo:</h3>
+<p>
 useMemo memoizes a value (result of a calculation).
 
 useCallback memoizes a function (so its reference stays the same).
+</p>
 </div>
   <h2>Real-World Example: Preventing Child Re-render</h2>
   <pre><code class="language-js">
