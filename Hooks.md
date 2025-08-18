@@ -66,7 +66,111 @@ export default function ProductFilter() {
       </ul>
     </dd>
   </dl>
+<div>
+  
+<p>useCallback returns a memoized function that only changes when its dependencies change.
+It’s used to prevent re-creation of functions on every render, which is helpful when:
 
+Passing functions as props to child components (avoiding unnecessary re-renders).
+
+Avoiding function identity change when dependencies didn’t change.
+</p>
+<h3>Basic Example</h3>
+import React, { useState, useCallback } from "react";
+
+function Button({ onClick, children }) {
+  console.log(`Rendering button: ${children}`);
+  return <button onClick={onClick}>{children}</button>;
+}
+
+export default function UseCallbackExample() {
+  const [count, setCount] = useState(0);
+  const [theme, setTheme] = useState(false);
+
+  // Without useCallback, this function is recreated every render
+  const increment = useCallback(() => {
+    setCount((c) => c + 1);
+  }, []); // Dependencies: none
+
+  return (
+    <div style={{ background: theme ? "black" : "white", color: theme ? "white" : "black", padding: "20px" }}>
+      <h2>Count: {count}</h2>
+      <Button onClick={increment}>Increment</Button>
+      <Button onClick={() => setTheme(!theme)}>Toggle Theme</Button>
+    </div>
+  );
+}
+
+<h3>
+  Why useCallback Helps Here
+</h3>
+  
+
+<p>
+  Without useCallback, increment is a new function on every render.
+
+If <Button> is memoized with React.memo, it would still re-render because the onClick prop is "different" each time.
+
+With useCallback, the same function reference is reused until dependencies change.
+
+Real-World Practical Example — Search with Debounce
+
+Imagine a search box where the search function is passed down to a child component that handles API calls with debounce.
+We don’t want the debounce to reset on every render just because the parent re-rendered.
+</p>
+
+
+import React, { useState, useCallback } from "react";
+
+function SearchInput({ onSearch }) {
+  console.log("Rendering SearchInput...");
+  return (
+    <input
+      type="text"
+      placeholder="Search..."
+      onChange={(e) => onSearch(e.target.value)}
+    />
+  );
+}
+
+export default function SearchPage() {
+  const [results, setResults] = useState([]);
+
+  const fetchResults = useCallback((query) => {
+    console.log(`Searching for: ${query}`);
+    // Imagine calling an API here
+    setResults([`Result for "${query}"`]);
+  }, []); // No dependencies → function won't be recreated
+
+  return (
+    <div style={{ padding: "20px" }}>
+      <h2>Search Page</h2>
+      <SearchInput onSearch={fetchResults} />
+      <ul>
+        {results.map((res, i) => (
+          <li key={i}>{res}</li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
+Where useCallback Helps in the Real World
+
+Form inputs where change handlers are passed to deeply nested components.
+
+Buttons and menus in large UIs to avoid re-rendering child components unnecessarily.
+
+Debounced or throttled API calls to avoid function recreation resetting timers.
+
+React.memo with functions as props — prevents child components from thinking props have changed.
+
+💡 Difference from useMemo:
+
+useMemo memoizes a value (result of a calculation).
+
+useCallback memoizes a function (so its reference stays the same).
+</div>
   <h2>Real-World Example: Preventing Child Re-render</h2>
   <pre><code class="language-js">
 import React, { useState, useCallback } from "react";
