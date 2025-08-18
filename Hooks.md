@@ -202,4 +202,18 @@ export default function Parent() {
 }
   </code></pre>
 </div>
+<div>
+  <pre>
+    <code class="language-js">
+      import React from "react";
+
+const ChildButton = React.memo(({ onClick }) => {
+  console.log("Child rendered"); // To check if re-render happens
+  return <button onClick={onClick}>Click Me</button>;
+});
+
+export default ChildButton;
+    </code>
+  </pre>
+</div>
 
